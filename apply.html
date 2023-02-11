@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Lufthansa Virtual - Pilot Application</title>
+    <style>
+      /* Add some styling to give the site a Lufthansa Airlines theme */
+      body {
+        background-color: #0C2340;
+        background-image: url("Airbus-A321-Neo-12.png");
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-top: 50px;
+        font-family:"Helvetica"
+      }
+
+      form {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #333;
+        margin: auto;
+        padding: 20px;
+        width: 50%;
+        font-family:"Helvetica"
+      }
+
+      label {
+        font-size: 18px;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        color: black;
+        font-family:"Helvetica"
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        font-size: 18px;
+        padding: 10px;
+        width: 90%;
+        margin-bottom: 20px;
+        font-family:"Helvetica"
+      }
+
+      input[type="submit"] {
+        background-color: #f9ba00;
+        border: 0;
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-family:"Helvetica"
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lufthansa Virtual - Pilot Application</h1>
+    <form action="" method="post">
+      <label for="name">What is your name?</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="surname">What is your surname?</label>
+      <input type="text" id="surname" name="surname" required>
+
+      <label for="age">How old are you?</label>
+      <input type="text" id="age" name="age" required>
+
+      <label for="cid">What is your CID? (if you don't have one leave this area blank)</label>
+      <input type="text" id="cid" name="cid">
+
+      <label for="ivaoid">What is your VID? (if you don't have one leave this area blank)</label>
+      <input type="text" id="ivaoid" name="ivaoid">
+
+      <label for="location">Where are you from?</label>
+      <input type="text" id="location" name="location">
+
+      <label for="email">What is your email?</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="discordid">What is your discord id?</label>
+      <input type="text" id="discordid" name="discordid" required>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+  <script>
+    // Submit event handler for the form
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  // Get the form data
+  const name = document.querySelector("#name").value;
+  const surname = document.querySelector("#surname").value;
+  const age = document.querySelector("#age").value;
+  const cid = document.querySelector("#cid").value;
+  const ivaoid = document.querySelector("#ivaoid").value;
+  const location = document.querySelector("#location").value;
+  const email = document.querySelector("#email").value;
+
+  // Create the payload for the webhook
+  const payload = {
+    embeds: [
+      {
+        color: 3066993,
+        fields: [
+          {
+            name: "Name",
+            value: name,
+            inline: false,
+          },
+          {
+            name: "Surname",
+            value: surname,
+            inline: false,
+          },
+          {
+            name: "Age",
+            value: age,
+            inline: false,
+          },
+          {
+            name: "CID",
+            value: cid,
+            inline: false,
+          },
+          {
+            name: "IVAO User ID",
+            value: ivaoid,
+            inline: false,
+          },
+          {
+            name: "Location",
+            value: location,
+            inline: false,
+          },
+          {
+            name: "Email",
+            value: email,
+            inline: false,
+          },
+        ],
+      },
+    ],
+  };
+
+  // Send the payload to the webhook
+  fetch("https://discord.com/api/webhooks/1074004302059806750/mNr7rAJaImlfi0tncDyrxo1kqwRup_8GnUSfQRbji6tEBULJY9NQ-vPZSt7q0o0Rlad8", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+});
+
+</script>
+</html>
