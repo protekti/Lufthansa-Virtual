@@ -97,6 +97,7 @@
       // If the cookie exists, prevent the form from submitting and display a message
       event.preventDefault();
       alert("You have already submitted the form.");
+      window.location.href = "index.html";
       return;
     }
 
@@ -169,9 +170,6 @@
       },
       body: JSON.stringify(payload),
     });
-      setTimeout(function(){
-         window.location.href = "success.html";
-      }, 3000);
   });
 
 </script>
