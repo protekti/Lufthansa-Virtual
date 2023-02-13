@@ -62,7 +62,7 @@
   </head>
   <body>
     <h1>Lufthansa Virtual - Pilot Application</h1>
-    <form action="" method="post">
+    <form action="" method="post" id="application">
       <label for="name">What is your name?</label>
       <input type="text" id="name" name="name" required>
 
@@ -91,76 +91,85 @@
     </form>
   </body>
   <script>
-    // Submit event handler for the form
-document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault();
+    document.querySelector("form").addEventListener("submit", function (event) {
+    // Check if the cookie exists
+    if (document.cookie.replace(/(?:(?:^|.*;\s*)formSubmitted\s*\=\s*([^;]*).*$)|^.*$/, "$1") === "true") {
+      // If the cookie exists, prevent the form from submitting and display a message
+      event.preventDefault();
+      alert("You have already submitted the form.");
+      return;
+    }
 
-  // Get the form data
-  const name = document.querySelector("#name").value;
-  const surname = document.querySelector("#surname").value;
-  const age = document.querySelector("#age").value;
-  const cid = document.querySelector("#cid").value;
-  const ivaoid = document.querySelector("#ivaoid").value;
-  const location = document.querySelector("#location").value;
-  const email = document.querySelector("#email").value;
+    // Set the cookie to remember that the form has been submitted
+    document.cookie = "formSubmitted=true;max-age=432000"; // expires in 1 day
+    event.preventDefault();
 
-  // Create the payload for the webhook
-  const payload = {
-    embeds: [
-      {
-        color: 3066993,
-        fields: [
-          {
-            name: "Name",
-            value: name,
-            inline: false,
-          },
-          {
-            name: "Surname",
-            value: surname,
-            inline: false,
-          },
-          {
-            name: "Age",
-            value: age,
-            inline: false,
-          },
-          {
-            name: "CID",
-            value: cid,
-            inline: false,
-          },
-          {
-            name: "IVAO User ID",
-            value: ivaoid,
-            inline: false,
-          },
-          {
-            name: "Location",
-            value: location,
-            inline: false,
-          },
-          {
-            name: "Email",
-            value: email,
-            inline: false,
-          },
-        ],
+    // Get the form data
+    const name = document.querySelector("#name").value;
+    const surname = document.querySelector("#surname").value;
+    const age = document.querySelector("#age").value;
+    const cid = document.querySelector("#cid").value;
+    const ivaoid = document.querySelector("#ivaoid").value;
+    const location = document.querySelector("#location").value;
+    const email = document.querySelector("#email").value;
+
+    // Create the payload for the webhook
+    const payload = {
+      embeds: [
+        {
+          color: 3066993,
+          fields: [
+            {
+              name: "Name",
+              value: name,
+              inline: false,
+            },
+            {
+              name: "Surname",
+              value: surname,
+              inline: false,
+            },
+            {
+              name: "Age",
+              value: age,
+              inline: false,
+            },
+            {
+              name: "CID",
+              value: cid,
+              inline: false,
+            },
+            {
+              name: "IVAO User ID",
+              value: ivaoid,
+              inline: false,
+            },
+            {
+              name: "Location",
+              value: location,
+              inline: false,
+            },
+            {
+              name: "Email",
+              value: email,
+              inline: false,
+            },
+          ],
+        },
+      ],
+    };
+
+    // Send the payload to the webhook
+    var str = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTA3NDAxOTExNjkyNDUzOTAxMy95OWc1NFRzS0IxLU9jWWxhOUs1NXYtakplQXA5YkRzZVJPNmZ3ZjUzYmo4MzRfTENzOXo1aV9sVkNVMkJtUnJYZ0dPVw==";
+    url = window.atob(str);
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    ],
-  };
-
-  // Send the payload to the webhook
-  var str = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTA3NDAxOTExNjkyNDUzOTAxMy95OWc1NFRzS0IxLU9jWWxhOUs1NXYtakplQXA5YkRzZVJPNmZ3ZjUzYmo4MzRfTENzOXo1aV9sVkNVMkJtUnJYZ0dPVw==";
-  url = window.atob(str);
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
+      body: JSON.stringify(payload),
+    });
   });
-});
 
 </script>
 </html>
